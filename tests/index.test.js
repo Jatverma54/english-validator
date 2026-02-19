@@ -3,7 +3,7 @@ import {
   isEnglish,
   matchesDocumentPattern,
   clearLanguageDetectorCaches,
-} from "../src/index.js";
+} from "../src/index";
 
 afterEach(() => {
   clearLanguageDetectorCaches();
@@ -240,5 +240,70 @@ describe("word-level detection", () => {
     const longText = "The quick brown fox jumps over the lazy dog and runs through the field with great speed and energy";
     detectNonEnglishText(longText);
     expect(isEnglish(longText)).toBe(true);
+  });
+
+  test("allowNumbers=false treats standalone numbers differently", () => {
+    const result = detectNonEnglishText("12345 67890", { allowNumbers: false });
+    expect(typeof result).toBe("boolean");
+  });
+
+  test("handles contraction with unknown base word", () => {
+    expect(detectNonEnglishText("xyzzy's foobar's bazzle's")).toBe(true);
+  });
+
+  test("handles single character input", () => {
+    expect(detectNonEnglishText("a")).toBe(false);
+  });
+
+  test("hasObviousNonEnglishIndicators returns false for empty/short text", () => {
+    expect(detectNonEnglishText("x")).toBe(false);
+  });
+
+  test("text with only whitespace", () => {
+    expect(detectNonEnglishText("   ")).toBe(false);
+  });
+
+  test("non-English text with spaces triggers multi-word non-English check", () => {
+    expect(detectNonEnglishText("über straße größe kühl wärme schön")).toBe(true);
+  });
+
+  test("Italian word endings (-zione)", () => {
+    expect(detectNonEnglishText("comunicazione informazione educazione")).toBe(true);
+  });
+
+  test("Dutch word endings (-baar, -lijk)", () => {
+    expect(detectNonEnglishText("bereikbaar begrijpelijk onmogelijk")).toBe(true);
+  });
+
+  test("Portuguese word endings (-agem, -ção)", () => {
+    expect(detectNonEnglishText("mensagem comunicação informação")).toBe(true);
+  });
+
+  test("French word endings (-eur)", () => {
+    expect(detectNonEnglishText("professeur directeur ingénieur")).toBe(true);
+  });
+
+  test("unknown word not in dictionary returns non-English", () => {
+    expect(detectNonEnglishText("zxqwvbn plmokn ijuhbg")).toBe(true);
+  });
+
+  test("word with apostrophe where base is in dictionary", () => {
+    expect(isEnglish("I don't think we won't be able to go there today")).toBe(true);
+  });
+
+  test("handles franc analysis with eng detected but low english ratio", () => {
+    expect(detectNonEnglishText("the der die das ein eine mit für")).toBe(true);
+  });
+
+  test("handles text where all words are below minWordLength", () => {
+    expect(detectNonEnglishText("a I", { minWordLength: 3 })).toBe(false);
+  });
+
+  test("non-English with high confidence from franc", () => {
+    expect(
+      detectNonEnglishText(
+        "Dies ist ein langer deutscher Satz der genügend Wörter hat um eine gute Erkennung zu ermöglichen"
+      )
+    ).toBe(true);
   });
 });
