@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "Detect whether a sentence is English or non-English. Returns true/false with high accuracy using dictionary lookup and trigram analysis.",
   "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.esm.js",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     }
@@ -18,7 +18,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rollup -c && node -e \"require('fs').writeFileSync('dist/index.esm.js', 'export { detectNonEnglishText, isEnglish, matchesDocumentPattern, clearLanguageDetectorCaches } from \\\"./index.cjs.js\\\";\\n')\"",
+    "build": "rollup -c",
     "test": "jest --coverage",
     "prepublishOnly": "npm run build && npm test",
     "lint": "eslint src/",
@@ -47,10 +47,8 @@
     "url": "https://github.com/Jatverma54/english-text-validator/issues"
   },
   "homepage": "https://github.com/Jatverma54/english-text-validator#readme",
-  "dependencies": {
-    "franc": "^6.2.0"
-  },
   "devDependencies": {
+    "franc": "^6.2.0",
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",

@@ -5,18 +5,24 @@ import typescript from "@rollup/plugin-typescript";
 
 const plugins = [
   typescript({ tsconfig: "./tsconfig.json", declaration: true, declarationDir: "./dist" }),
-  resolve(),
+  resolve({ preferBuiltins: false }),
   commonjs(),
   json(),
 ];
 
 export default {
   input: "src/index.ts",
-  output: {
-    file: "dist/index.cjs.js",
-    format: "cjs",
-    exports: "named",
-  },
+  output: [
+    {
+      file: "dist/index.cjs.js",
+      format: "cjs",
+      exports: "named",
+    },
+    {
+      file: "dist/index.mjs",
+      format: "es",
+    },
+  ],
   plugins,
-  external: ["franc"],
+  // franc is bundled inline (not external) to avoid ESM-from-CJS issues
 };
