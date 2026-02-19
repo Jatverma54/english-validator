@@ -1,9 +1,9 @@
-# english-text-validator
+# english-validator
 
 > Detect whether a sentence is English or non-English. Returns `true` / `false` with high accuracy.
 
-[![npm version](https://img.shields.io/npm/v/english-text-validator.svg)](https://www.npmjs.com/package/english-text-validator)
-[![license](https://img.shields.io/npm/l/english-text-validator.svg)](https://github.com/Jatverma54/english-text-validator/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/english-validator.svg)](https://www.npmjs.com/package/english-validator)
+[![license](https://img.shields.io/npm/l/english-validator.svg)](https://github.com/Jatverma54/english-validator/blob/main/LICENSE)
 
 ## Features
 
@@ -18,7 +18,7 @@
 ## Installation
 
 ```bash
-npm install english-text-validator
+npm install english-validator
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ npm install english-text-validator
 ### ESM (React, Next.js, Vite, modern Node.js)
 
 ```ts
-import { isEnglish, detectNonEnglishText } from "english-text-validator";
+import { isEnglish, detectNonEnglishText } from "english-validator";
 
 isEnglish("The quick brown fox jumps over the lazy dog");
 // => true
@@ -45,7 +45,7 @@ detectNonEnglishText("Hello, how are you?");
 ### CommonJS (Node.js)
 
 ```js
-const { isEnglish, detectNonEnglishText } = require("english-text-validator");
+const { isEnglish, detectNonEnglishText } = require("english-validator");
 
 console.log(isEnglish("Hello world")); // true
 ```
@@ -60,8 +60,8 @@ import {
   detectNonEnglishText,
   matchesDocumentPattern,
   clearLanguageDetectorCaches,
-} from "english-text-validator";
-import type { DetectionOptions } from "english-text-validator";
+} from "english-validator";
+import type { DetectionOptions } from "english-validator";
 
 // Use DetectionOptions for custom configuration
 const options: DetectionOptions = {
@@ -134,7 +134,7 @@ Configuration object accepted by `isEnglish` and `detectNonEnglishText`:
 ### React Component
 
 ```tsx
-import { isEnglish } from "english-text-validator";
+import { isEnglish } from "english-validator";
 
 function LanguageCheck({ text }: { text: string }) {
   return (
@@ -148,7 +148,7 @@ function LanguageCheck({ text }: { text: string }) {
 ### Node.js API Middleware
 
 ```ts
-import { detectNonEnglishText } from "english-text-validator";
+import { detectNonEnglishText } from "english-validator";
 
 app.post("/api/comment", (req, res) => {
   if (detectNonEnglishText(req.body.text)) {
@@ -161,8 +161,8 @@ app.post("/api/comment", (req, res) => {
 ### Custom Threshold
 
 ```ts
-import { isEnglish } from "english-text-validator";
-import type { DetectionOptions } from "english-text-validator";
+import { isEnglish } from "english-validator";
+import type { DetectionOptions } from "english-validator";
 
 // More lenient — allows mixed-language text
 const lenient: DetectionOptions = { englishThreshold: 0.5 };
