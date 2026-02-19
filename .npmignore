@@ -1,0 +1,10 @@
+src/
+language/
+tests/
+coverage/
+.DS_Store
+.gitignore
+rollup.config.mjs
+babel.config.js
+jest.config.js
+*.log
